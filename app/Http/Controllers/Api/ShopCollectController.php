@@ -29,7 +29,7 @@ class ShopCollectController extends ApiController
         }
 
         if(empty(\Auth::user()->id)){
-            $user_id = 0;
+            $user_id = 1;
         }else{
             $user_id = \Auth::user()->id;
         }
@@ -79,7 +79,7 @@ class ShopCollectController extends ApiController
             return $this->failed($validator->errors(), 403);
         }
         if(empty(\Auth::user()->id)){
-            $user_id = 0;
+            $user_id = 1;
         }else{
             $user_id = \Auth::user()->id;
         }

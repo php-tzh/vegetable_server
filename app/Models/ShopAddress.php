@@ -13,6 +13,7 @@ class ShopAddress extends Model
 
     //
     protected $table = "shop_address";
+    protected $guarded = [];
 
     static public function getList($where){
         $where = array_merge(['status'=>self::STATUS_ON],$where);

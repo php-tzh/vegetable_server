@@ -76,6 +76,7 @@ class ShopAddressController extends ApiController
         if ($validator->fails()) {
             return $this->failed($validator->errors(), 403);
         }
+        //更新或者插入
         if ($request->id && $request->id > 0) {
             $model = ShopAddress::find($request->id);
         } else {

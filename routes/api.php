@@ -17,38 +17,42 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
 Route::namespace('Api')->group(function () {
     // 在 "App\Http\Controllers\Api" 命名空间下的控制器
     Route::any('/order-notify', 'PaymentController@notify');
 
+    // 短信验证码
+    Route::post('/verificationCodes', 'VerificationCodesController@store')
+        ->name('verificationCodes.store'); 
+
     // 项目估价json
-    Route::any('/project_json/types', 'ProjectJsonController@getProjectTypes');
-    Route::any('/project_json/func-types', 'ProjectJsonController@getProjectFuncTypesByTypeId');
-    Route::any('/project_json/models', 'ProjectJsonController@getProjectModelsByFunctypeId');
+    // Route::any('/project_json/types', 'ProjectJsonController@getProjectTypes');
+    // Route::any('/project_json/func-types', 'ProjectJsonController@getProjectFuncTypesByTypeId');
+    // Route::any('/project_json/models', 'ProjectJsonController@getProjectModelsByFunctypeId');
 
-    // 微信相关
-    Route::get('/getwxacodeunlimit', 'WeixinController@getwxacodeunlimit');
-
-
-
-
+    // // 微信相关
+    // Route::get('/getwxacodeunlimit', 'WeixinController@getwxacodeunlimit');
     // 需要用户信息的
-    Route::middleware('auth:api')->group(function () {
+    //   // 登录后可以访问的接口
+    // Route::middleware('auth:api')->group(function() {
+// 
         // 砍价相关的
-        Route::get('/bargain-list', 'BargainController@bargainList');
-        Route::get('/bargain-goods-detail', 'BargainController@bargainGoodsDetail');
-        Route::post('/bargain-help', 'BargainController@bargainHandleHelp');
-        Route::get('/bargain-help-detail', 'BargainController@bargainHelpDetail');
-        Route::get('/bargain-detail', 'BargainController@bargainDetail');
+        // Route::get('/bargain-list', 'BargainController@bargainList');
+        // Route::get('/bargain-goods-detail', 'BargainController@bargainGoodsDetail');
+        // Route::post('/bargain-help', 'BargainController@bargainHandleHelp');
+        // Route::get('/bargain-help-detail', 'BargainController@bargainHelpDetail');
+        // Route::get('/bargain-detail', 'BargainController@bargainDetail');
 
-        Route::get('/index', 'IndexController@index');
-        Route::get('/project-type-json', 'ProjectElementController@getProjectType');
-        Route::get('/project-goods', 'ProjectElementController@getProjectGoods');
-        Route::post('/project-goods-transform', 'ProjectElementController@transform');
+        // Route::get('/index', 'IndexController@index');
+        // Route::get('/project-type-json', 'ProjectElementController@getProjectType');
+        // Route::get('/project-goods', 'ProjectElementController@getProjectGoods');
+        // Route::post('/project-goods-transform', 'ProjectElementController@transform');
 
         // 主题&专题
-        Route::get('/topic-list', 'ShopTopicController@getTopicList');
-        Route::get('/topic-detail', 'ShopTopicController@getTopicDetail');
+        // Route::get('/topic-list', 'ShopTopicController@getTopicList');
+        // Route::get('/topic-detail', 'ShopTopicController@getTopicDetail');
 
         // 分类目录
         Route::get('/catalog-index', 'ShopCategoryController@getCatalogIndex');
@@ -68,7 +72,7 @@ Route::namespace('Api')->group(function () {
         Route::get('/collect-list', 'ShopCollectController@getList');// 获取收藏列表
 
         // 品牌相关
-        Route::get('/brand-detail', 'ShopBrandController@getDetail');// 获取品牌详情
+        // Route::get('/brand-detail', 'ShopBrandController@getDetail');// 获取品牌详情
 
         // 购物车相关处理
         Route::get('/cart-index', 'ShopCartController@index');//获取购物车的数据
@@ -77,7 +81,6 @@ Route::namespace('Api')->group(function () {
         Route::post('/cart-delete', 'ShopCartController@delete');//删除购物车的商品
         Route::post('/cart-checked', 'ShopCartController@checked');//选择或取消选择商品
         Route::get('/cart-goodscount', 'ShopCartController@goodsCount');//获取购物车商品件数
-
         // 下单相关
         Route::get('/cart-checkout', 'ShopOrderController@checkout');//下单前信息确认
         Route::post('/pay-now', 'ShopOrderController@payNow');//立即购买
@@ -89,6 +92,8 @@ Route::namespace('Api')->group(function () {
         Route::get('/region-list', 'ShopRegionController@regionList');// 获取区域列表
 
         Route::get('/address-list', 'ShopAddressController@addressList');// 收货地址列表
+        
+        
         Route::get('/address-detail', 'ShopAddressController@addressDetail');// 收货地址详情
         Route::post('/address-save', 'ShopAddressController@addressSave');// 保存收货地址
         Route::post('/address-delete', 'ShopAddressController@addressDelete');// 删除收货地址
@@ -100,11 +105,11 @@ Route::namespace('Api')->group(function () {
         Route::get('/order-express', 'MyOrderController@orderExpress');// 物流详情
 
         // 领券中心
-        Route::get('/coupon-center', 'ShopCouponController@getCouponList');
-        // 领券中心
-        Route::get('/coupon-mine', 'ShopCouponController@getMyCouponList');
-        // 领券
-        Route::post('/coupon-get', 'ShopCouponController@getCoupon');
+        // Route::get('/coupon-center', 'ShopCouponController@getCouponList');
+        // // 领券中心
+        // Route::get('/coupon-mine', 'ShopCouponController@getMyCouponList');
+        // // 领券
+        // Route::post('/coupon-get', 'ShopCouponController@getCoupon');
 
         // 评论相关的
         Route::get('/comment-list', 'ShopCommentController@getCommentList');// 评论列表
@@ -114,13 +119,30 @@ Route::namespace('Api')->group(function () {
         // 用户反馈相关的
         Route::get('/feedback-datalist', 'ShopFeedbackController@getDataList');// 获取反馈选项信息
         Route::post('/feedback-handle', 'ShopFeedbackController@feedbackHandle');// 反馈
-
         // 用户足迹相关
         Route::get('/footprint-list', 'ShopFootprintController@getList');// 获取足迹列表
-
-
-    });
-
-    Route::any('/login', 'AuthenticateController@auto_login')->name('login');
+    // });
+        // Route::any('/login', 'Authe2nticateController@auto_login')->name('login');
+            // 图片验证码
+        Route::post('captchas', 'CaptchasController@store')
+            ->name('captchas.store');
+        // 短信验证码
+        Route::post('verificationCodes', 'VerificationCodesController@store')
+            ->name('verificationCodes.store');
+        // 用户注册
+        Route::post('users', 'UsersController@store')
+            ->name('users.store');
+        // 第三方登录
+        Route::post('socials/{social_type}/authorizations', 'AuthorizationsController@socialStore')
+            ->where('social_type', 'weixin')
+            ->name('api.socials.authorizations.store');
+        // 登录
+        Route::post('authorizations', 'AuthorizationsController@store')->name('api.authorizations.store');
+            // 刷新token
+        Route::put('authorizations/current', 'AuthorizationsController@update')
+            ->name('authorizations.update');
+        // 删除token
+        Route::delete('authorizations/current', 'AuthorizationsController@destroy')
+            ->name('authorizations.destroy');
 });
 

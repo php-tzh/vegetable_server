@@ -18,7 +18,7 @@ class ShopCartController extends ApiController
     public function index(Request $request)
     {
         $where = [
-            'uid' =>\Auth::user()->id,
+            'uid' =>1,
         ];
         $cartData = CartLogic::getCartList($where);
         return $this->success($cartData);
@@ -28,7 +28,7 @@ class ShopCartController extends ApiController
     public function add(Request $request)
     {
         if (empty(\Auth::user()->id)) {
-            $user_id = 0;
+            $user_id = 1;
         } else {
             $user_id = \Auth::user()->id;
         }
@@ -93,7 +93,7 @@ class ShopCartController extends ApiController
     public function delete(Request $request)
     {
         if (empty(\Auth::user()->id)) {
-            $user_id = 0;
+            $user_id = 1;
         } else {
             $user_id = \Auth::user()->id;
         }

@@ -106,4 +106,5 @@ class AuthenticateController extends ApiController
         $code = $request['code'];
         return $this->setStatusCode($code)->failed($msg);
     }
+    
 }
