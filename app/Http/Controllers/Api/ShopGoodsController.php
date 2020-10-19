@@ -85,7 +85,7 @@ class ShopGoodsController extends ApiController
         $outData = ShopGoodsLogic::getGoodsCategory(['id' => $request->id]);
         return $this->success($outData);
     }
-
+  
 
     // 获取商品详情
     public function getGoodsDetail(Request $request)
@@ -108,6 +108,7 @@ class ShopGoodsController extends ApiController
     }
 
 
+
     // 商品详情页的关联商品（大家都在看）
     public function getGoodsRelated(Request $request)
     {
@@ -117,7 +118,7 @@ class ShopGoodsController extends ApiController
         return $this->success($outData);
     }
 
-    // 新品
+    // 新品分类
     public function getGoodsNew(Request $request)
     {
         $outData['bannerInfo'] = Carousel::getCarouselByType(Carousel::BOOTH_TYPE_NEW);
@@ -126,7 +127,7 @@ class ShopGoodsController extends ApiController
         return $this->success($outData);
     }
 
-    // 热门
+    // 热门分类
     public function getGoodsHot(Request $request)
     {
         $outData['bannerInfo'] = Carousel::getCarouselByType(Carousel::BOOTH_TYPE_HOT);
@@ -134,5 +135,7 @@ class ShopGoodsController extends ApiController
         $outData['filterCategory'] = ShopCategory::getCategoryList(['level' => 1]);
         return $this->success($outData);
     }
+    //推荐
+   
 
 }

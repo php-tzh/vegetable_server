@@ -14,6 +14,9 @@ class MyOrderController extends ApiController
 
 
     // 订单列表
+    public function test(){
+        return "hello wrod".\Auth::user();
+    }
     public function orderList(Request $request)
     {
         // 先获取当前登录的用户信息

@@ -17,8 +17,13 @@ class ShopCartController extends ApiController
     // 获取购物车的数据
     public function index(Request $request)
     {
+        if (empty(\Auth::user()->id)) {
+            $user_id = 0;
+        } else {
+            $user_id = \Auth::user()->id;
+        }
         $where = [
-            'uid' =>1,
+            'uid' =>$user_id,
         ];
         $cartData = CartLogic::getCartList($where);
         return $this->success($cartData);
@@ -28,7 +33,7 @@ class ShopCartController extends ApiController
     public function add(Request $request)
     {
         if (empty(\Auth::user()->id)) {
-            $user_id = 1;
+            $user_id = 0;
         } else {
             $user_id = \Auth::user()->id;
         }
@@ -76,7 +81,7 @@ class ShopCartController extends ApiController
         if ($validator->fails()) {
             return $this->failed($validator->errors(), 403);
         }
-        $where['id'] = $request->id;
+        $where['goods_id'] = $request->id;
         $info = ShopCart::where($where)->first();
         $info->number = $request->number;
         $re = $info->save();
@@ -93,7 +98,7 @@ class ShopCartController extends ApiController
     public function delete(Request $request)
     {
         if (empty(\Auth::user()->id)) {
-            $user_id = 1;
+            $user_id = 0;
         } else {
             $user_id = \Auth::user()->id;
         }

@@ -66,6 +66,7 @@ Route::namespace('Api')->group(function () {
         Route::get('/goods-related', 'ShopGoodsController@getGoodsRelated');//商品详情页的关联商品（大家都在看）
         Route::get('/goods-new', 'ShopGoodsController@getGoodsNew');// 新品
         Route::get('/goods-hot', 'ShopGoodsController@getGoodsHot');//热门
+        Route::get('/goods-reco', 'ShopGoodsController@getGoodsReco');//推荐
 
         // 收藏相关
         Route::post('/collect-addordelete', 'ShopCollectController@addordelete');// 添加或取消收藏
@@ -103,7 +104,7 @@ Route::namespace('Api')->group(function () {
         Route::get('/order-detail', 'MyOrderController@orderDetail');// 订单详情
         Route::get('/order-cancel', 'MyOrderController@orderCancel');// 取消订单
         Route::get('/order-express', 'MyOrderController@orderExpress');// 物流详情
-
+       
         // 领券中心
         // Route::get('/coupon-center', 'ShopCouponController@getCouponList');
         // // 领券中心
@@ -144,5 +145,15 @@ Route::namespace('Api')->group(function () {
         // 删除token
         Route::delete('authorizations/current', 'AuthorizationsController@destroy')
             ->name('authorizations.destroy');
+        
+
+            // Route::middleware('auth:api')->group(function() {
+            //     // 当前登录用户信息
+            //     Route::post('/test','MyOrderController@test');
+            // });    
+
+           
+
+        
 });
 
